@@ -1,15 +1,16 @@
 // 載入 express 並建構應用程式伺服器
 const express = require('express') // (包含取得內建的body-parse)
 const app = express() 
+const port = 3000
+//把mongoose抽出到config後，在app.js 要引用設定檔
+require('./config/mongoose')
 
 
 // require express-handlebars here
 const exphbs = require('express-handlebars')
 
 const Url = require('./models/url')
-
-//把mongoose抽出到config後，在app.js 要引用設定檔
-require('./config/mongoose')
+const shortenURL = require("./models/shortenURL")
 
 
 // setting body-parser 改寫成 express，也可以直接取得 urlencoded 方法
@@ -25,8 +26,6 @@ app.set('view engine', 'hbs')
 app.use(express.static("public"))
 
 
-
-
 // 設定首頁路由
 app.get('/', (req, res) => {
   Url.find() // 取出 Url model 裡的所有資料
@@ -39,9 +38,9 @@ app.post('/', (req, res) => {
   if (!req.body.url) return res.redirect("/") //如果沒有輸入url網址就點擊送出，導回首頁
   const shortURL = shortenURL(5)
 
-  URL.findOne({ originalURL: req.body.url })
+  Url.findOne({ originalURL: req.body.url })
     .then(data =>
-      data ? data : URL.create({ shortURL, originalURL: req.body.url })
+      data ? data : Url.create({ shortURL, originalURL: req.body.url })
     )
     .then(data =>
       res.render("index", {
@@ -49,18 +48,15 @@ app.post('/', (req, res) => {
         shortURL: data.shortURL,
       })
     )
-  //   .catch(error => console.error(error))
-  // const url = req.body.url      // 從 req.body 拿出表單裡的 name 資料
-  // return Url.create({ url })     // 存入資料庫
-  //   .then(() => res.redirect('/')) // 新增完成後導回首頁
-  //   .catch(error => console.log(error))
+    .catch(error => console.error(error))
+
 })
 
 //
 app.get("/:shortURL", (req, res) => {
   const { shortURL } = req.params
 
-  URL.findOne({ shortURL })
+  Url.findOne({ shortURL })
     .then(data => {
       if (!data) {
         return res.render("error", {
@@ -75,6 +71,6 @@ app.get("/:shortURL", (req, res) => {
 })
 
 // 設定 port 3000
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000')
+app.listen(port, () => {
+  console.log(`App is running on http://localhost:${port}`)
 })
