@@ -28,10 +28,14 @@ app.use(express.static("public"))
 
 // 設定首頁路由
 app.get('/', (req, res) => {
-  Url.find() // 取出 Url model 裡的所有資料
-    .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
-    .then(urls => res.render('index', { urls })) // 將資料傳給 index 樣板 這裡 { urls } 是 { urls: urls } 的縮寫。
-    .catch(error => console.error(error)) // 錯誤處理
+  //因為此作業規格不需要做列表，因此可以簡單render畫面就好
+    res.render('index')
+  // Url.find() // 取出 Url model 裡的所有資料
+  //   .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
+  //   .then(urls => res.render('index', { urls })) // 將資料傳給 index 樣板 這裡 { urls } 是 { urls: urls } 的縮寫。
+  //   .catch(error => console.error(error)) // 錯誤處理
+
+    
 })
 
 app.post('/', (req, res) => {
