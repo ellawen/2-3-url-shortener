@@ -17,9 +17,9 @@ img {
 }
 
 .error-msg {
-  width: 50%;
+  width: 30%;
   text-align: center;
-  background-color: salmon;
+  background-color: rgb(121, 17, 5);
   padding: 8px 15px;
   border-radius: 5px;
   color: white;
@@ -35,7 +35,7 @@ img {
 }
 
 input {
-  width: 100%;
+  width: 500px;
   margin: 1rem 0;
   padding: 0.5rem;
   border: none;
@@ -52,12 +52,12 @@ a {
   text-align: center;
 }
 
-button.shorten,
-a {
-  width: 50%;
-  background-color: white;
-  border: 1px solid rgb(109, 109, 255);
-  color: rgb(109, 109, 255);
+button.shorten,a {
+  width: 30%;
+  background-color: rgb(27, 27, 103);
+  border: 1px solid gray;
+  border-radius: 3rem;
+  color: white;
   padding: 1rem;
 }
 
@@ -68,7 +68,7 @@ button:hover {
 button.copy {
   width: 12.5%;
   padding: 0.5rem;
-  background-color: rgb(109, 109, 255);
+  background-color: rgb(4, 66, 123);
   border: 1px solid white;
   color: white;
 }
